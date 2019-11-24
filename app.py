@@ -1,3 +1,12 @@
+# import crypto libraries
+from cn.protect import Protect
+from cn.protect.privacy import KAnonymity
+from cn.protect.hierarchy import DataHierarchy, OrderHierarchy, IntervalHierarchy
+from cn.protect.quality import Loss
+from sklearn.linear_model import LogisticRegression, SGDClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
 from keras.utils import to_categorical
 from keras.models import Sequential
 from keras.layers import Dense, Activation
@@ -7,11 +16,23 @@ import pandas as pd
 import time
 from twilio.rest import Client
 
-
 mitTestData = pd.read_csv("mitbih_test.csv", header=None)
 mitTrainData = pd.read_csv("mitbih_train.csv", header=None)
 # drop missing values
 mitTrainData = pd.concat([mitTrainData, mitTestData], axis=0)
+
+# privacy model
+prot=Protect(mitTrainData, KAnonymity(5))
+# quality model
+prot.quality_model = Loss()
+# no more than 10% of rows will be redacted
+prot.suppression = .1
+# create hierarchies automatically
+prot.hierarchies.age = OrderHierarchy('interval', 5, 2, 2)
+# return an anonymized dataframe
+priv = prot.protect()
+
+mitTrainData = priv
 
 print("MIT test dataset")
 print(mitTestData.info())
