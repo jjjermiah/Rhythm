@@ -1,9 +1,4 @@
 from tensorflow import keras
-from keras.utils import to_categorical
-from keras.models import Sequential
-from keras.layers import Dense, Activation
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import time
 from twilio.rest import Client
@@ -20,24 +15,26 @@ predict = model.predict(test1)
 
 classificationFull = [
     "Normal",
-    "Atrial premature, Aberrant atrial premature, Nodal premature, or Supra-ventricular premature",
-    " Premature ventricular contraction, or Ventricular escape",
-    "Fusion of ventricular and normal",
-    "Paced, Fusion of paced and normal, or Unclassifiable",
+    "Premature atrial contraction",
+    " Premature ventricular contraction or Ventricular escape",
+    "ventricular fibrillation",
+    "Bradyarrhythmias",
     
 ]
 
-classification = ["N", "S", "V", "F", "Q"]
+#classification = ["N", "S", "V", "F", "Q"]
 
 mostLikely = max(predict[0])
 for i in range(len(predict[0])):
     if mostLikely == predict[0][i]:
         indexValue = i
 
-
-print(mostLikely)
+percentage = mostLikely*100
+print(percentage)
 print(indexValue)
-print("The Patient is likley to have", mostLikely, "of", classificationFull[indexValue])
+print("\nThe Patient is likley to have {:8.6f}% chance of {}.\n".format(percentage,classificationFull[indexValue]))
+
+
 
 if indexValue in [0, 3]:
     print("Patient seems to have normal readings")
