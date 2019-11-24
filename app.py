@@ -4,8 +4,7 @@ from keras.layers import Dense, Activation
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import time
-from twilio.rest import Client
+
 
 
 mitTestData = pd.read_csv("mitbih_test.csv", header=None)
@@ -96,8 +95,8 @@ model.compile(optimizer='adam',
               loss='categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(X, y, epochs=29)
-model.save("bigboy.h5")
+model.fit(X, y, epochs = 100)
+model.save("rhythmModel.h5")
 
 print("Evaluation: ")
 mse, acc = model.evaluate(testX, testy)
