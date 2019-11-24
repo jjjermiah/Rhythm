@@ -7,15 +7,15 @@ Jermiah, Luke, Ajith, Nevalen
 
 import csv
 import serial
-
+import pandas as pd
 try:
     arduino = serial.Serial("COM8", timeout=1, baudrate=9600)   # Try opening the port at a determined baud rate (bits per second)
 except:
     print('Please check the port')
 
 
-with open("datafile.csv", "w") as new_file:
-    csv_writer = csv.writer(new_file, lineterminator='\n')
+with open("datafile2.csv", "w") as new_file:
+    csv_writer = csv.writer(new_file, lineterminator=',')
 
     line_count = 0
     while True:
@@ -25,15 +25,11 @@ with open("datafile.csv", "w") as new_file:
             def clean(L):  # L is a list
                 temp = L[2:]
                 temp = temp[:-1]
-
                 return int(temp)/1024
-
             cleandata = clean(rawdata)
             csv_writer.writerow([cleandata])
 
-        # Increment the line count, and stop the loop
-        # once we have 10 lines
-        if line_count >= 100000:
+        if(line_count>188):
             break
 
 print("Recording Complete")
