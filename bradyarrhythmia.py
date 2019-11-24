@@ -63,16 +63,16 @@ if indexValue in [0]:
     print("Patient seems to have normal readings")
 
 else:
-    account_sid = "ACade708eff4a73543f6e0aa4bd6332297"
-    assistant_sid = "UA02741bb12ece0d3865c6ae8c2217f441"
-    auth_token = "5edd3d66516e54155335db85eda8d998"
+    account_sid = ""
+    assistant_sid = ""
+    auth_token = ""
 
     client = Client(account_sid, auth_token)
 
     call = client.calls.create(
         to="6479780432",
         from_="+17347990482",
-        url='https://channels.autopilot.twilio.com/v1/ACade708eff4a73543f6e0aa4bd6332297/UA02741bb12ece0d3865c6ae8c2217f441/twilio-voice',
+        url='',
 
     )
 
