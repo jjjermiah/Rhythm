@@ -10,6 +10,8 @@ from twilio.rest import Client
 
 mitTestData = pd.read_csv("mitbih_test.csv", header=None)
 mitTrainData = pd.read_csv("mitbih_train.csv", header=None)
+# drop missing values
+mitTrainData = pd.read_csv([mitTrainData, mitTestData], axis=0)
 
 print("MIT test dataset")
 print(mitTestData.info())
